@@ -4,48 +4,47 @@ var cards = [];
 
 var create = document.getElementById('createButton');
 var text = document.getElementById('textArea');
-var number = 0;
+var newCard = document.getElementById('newCard');
 
 create.addEventListener('click', function(){
-	buildDomString(text.value);
-	console.log(text.value);
+	writeToArray(text.value);
+	text.value = "";
+	buildDomString();
 	addDeleteEventListener();
 });
 
 
-function writeToArray(){
-	cards.push(text.value);
+function writeToArray(strang){
+	cards.push(strang);
 }
 
 function addDeleteEventListener(){
 	for(var i = 0; i<cards.length; i++){
-	var button = document.getElementById(`delete_${number}`);
+	var button = document.getElementById(`delete_${i}`);
 	button.addEventListener('click', remove);
 	}
 }
 
 function remove(e){
-	e.currentTarget.parentNode.removeChild(newCard);
-	// var mainDivParent = document.getElementById('newCard');
-	// mainDivParent.removeChild(divNode);
-	// console.log("in delete card", divNode);
+	newCard.removeChild(e.target.parentNode);
 }
 
-function buildDomString(card){
-	console.log(text.value);
-	number++;
+function buildDomString(){
+	for(j = 0; j < cards.length; j++){
 	var domString = "";
 
 	domString += "<section class='textField'>";
-	domString += `<p>${card}</p>`;
-	domString += `<button id='delete_${number}' type='button'>Delete</button>`;
+	domString += `<p>${cards[j]}</p>`;
+	domString += `<button id='delete_${j}' type='button'>Delete</button>`;
 	domString += "</section>";
+	}
 
 	write(domString);
 }
 
+
 function write(pass){
-	document.getElementById('newCard').innerHTML+=pass;
+	newCard.innerHTML+=pass;
 }
 
 
